@@ -4,8 +4,38 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Image Board</title>
+        <link rel="stylesheet" href="/style.css">
     </head>
     <body>
+        <div id="main">
+            <nav>
+                <h1> &ltimg&gt board</h1> 
+            </nav>
+            <header>
+            <form action="/upload" method="post" enctype="multipart/form-data"
+            @submit.prevent="upload">
+                <label for="title"> Title:</label>
+                <input type="text" name="title" v-model="message">
+                <label for="description">Description:</label>
+                <input type="text" name="description">
+                <label for="username">Username::</label>
+                <input type="text" name="username">
+                <label for="file">File:</label>
+                <input type="file" name="file">
+                <button type="submit">Upload</button>
+            </form>
+            </header>
+            <main>
+                {{ message }}
+                <div class="img-card" v-for="image in images">
+                    <img class="image" :src=image.url alt="image">
+                    <h3 class="title">{{image.title}}</h3>
+                </div>
+            </main>
+            <footer>
+                ©2022 Juniper spice. All rights reserved.
+            </footer>
+        </div>
         <script
             src="/js/app.js"
             type="module"
