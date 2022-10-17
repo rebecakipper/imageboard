@@ -15,7 +15,7 @@
             <form action="/upload" method="post" enctype="multipart/form-data"
             @submit.prevent="upload">
                 <label for="title"> Title:</label>
-                <input type="text" name="title" v-model="message">
+                <input type="text" name="title">
                 <label for="description">Description:</label>
                 <input type="text" name="description">
                 <label for="username">Username::</label>
@@ -26,8 +26,8 @@
             </form>
             </header>
             <main>
-                {{ message }}
-                <div class="img-card" v-for="image in images">
+                <image-modal :image-id="clickedImageId" v-if="displayModal"></image-modal>
+                <div class="img-card" v-for="image in images" @click="showModal(image.id)">
                     <img class="image" :src=image.url alt="image">
                     <h3 class="title">{{image.title}}</h3>
                 </div>

@@ -1,14 +1,10 @@
 import * as Vue from "./vue.js";
+import imageModal from "./image-modal.js";
 
 Vue.createApp({
     methods: {
         upload(e) {
             const form = e.currentTarget;
-            //console.log({ form });
-
-            // get the file input
-            // check its files.
-            // if no files, set error message!
             const fileInput = form.querySelector("input[type=file]");
             console.log(fileInput.files);
 
@@ -35,20 +31,29 @@ Vue.createApp({
                     }
                 });
         },
+        showModal(id) {
+            this.displayModal = true;
+            this.clickedImageId = id;
+        },
     },
     data() {
         return {
             message: "Please upload an image",
             images: [],
+            displayModal: null,
+            clickedImageId: null,
         };
     },
+    components: {
+        "image-modal": imageModal,
+    },
+
     mounted() {
         this.state = "mounted";
 
         fetch("/images")
             .then((res) => res.json())
             .then((images) => {
-                console.log({ images });
                 this.images = images;
             });
     },

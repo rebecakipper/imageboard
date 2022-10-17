@@ -27,3 +27,13 @@ module.exports.getAllImages = function () {
             console.log("error getting all images", error);
         });
 };
+
+module.exports.getImageById = function (id) {
+    const sql = `SELECT * FROM images WHERE id=$1;`;
+    return db
+        .query(sql, [id])
+        .then((result) => result.rows[0])
+        .catch((error) => {
+            console.log("error getting all images", error);
+        });
+};

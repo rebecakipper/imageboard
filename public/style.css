@@ -62,12 +62,47 @@ header {
     text-align: center;
 }
 
+.img-card:hover {
+    border: 10px solid rgb(249, 198, 194);
+}
+
 .image {
     object-fit: cover;
     height: 150px;
-    width: 246px;
+    width: 230px;
+    padding: 10px;
 }
 
 .title {
     color: blue;
+}
+
+.img-modal {
+    border: 2px solid rgb(186, 74, 251);
+    background-color: rgb(98, 255, 0);
+    height: 600px;
+    width: 900px;
+    margin: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.img-modal:hover {
+    border: 5px solid orange;
+}
+.modal {
+    position: fixed;
+}
+
+.background {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal-image {
+    height: 300px;
+    width: 400px;
+    object-fit: contain;
 }
