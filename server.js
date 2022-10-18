@@ -13,7 +13,15 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 
 app.get("/images", (req, res) => {
-    const images = db.getAllImages().then((result) => res.json(result));
+    db.getAllImages().then((result) => res.json(result));
+});
+
+app.get("/images/more", (req, res) => {
+    const lastId = req.query.lastId;
+    db.getMoreImages(lastId).then(([images, { id }]) => {
+        const responseObj = { images, id };
+        res.json(responseObj);
+    });
 });
 
 app.get("/image/:id", (req, res) => {

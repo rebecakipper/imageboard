@@ -38,6 +38,19 @@ Vue.createApp({
         closeModal() {
             this.displayModal = false;
         },
+        getMoreImages() {
+            this.lastId = this.images[this.images.length - 1].id;
+            //console.log(this.lastId, this.images);
+            const fetchPath = "/images/more?lastId=" + this.lastId;
+            fetch(fetchPath)
+                .then((res) => res.json())
+                .then((result) => {
+                    const { images, id } = result;
+                    const [a, b, c] = images;
+                    this.lastId = id;
+                    this.images.push(a, b, c);
+                });
+        },
     },
     data() {
         return {
@@ -45,6 +58,7 @@ Vue.createApp({
             images: [],
             displayModal: null,
             clickedImageId: null,
+            lastId: 0,
         };
     },
     components: {

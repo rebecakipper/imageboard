@@ -6,7 +6,7 @@
 body {
     background-color: antiquewhite;
     display: grid;
-
+    text-align: center;
     grid-template-rows: 4rem auto 45px 1fr;
 
     gap: 3px;
@@ -136,4 +136,7 @@ header {
     border-bottom: 2px dotted grey;
     background-color: antiquewhite;
     padding: 10px;
+}
+
+#more-btn {
 }

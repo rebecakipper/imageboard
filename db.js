@@ -19,7 +19,9 @@ module.exports.insertImage = function (url, username, title, description) {
 };
 
 module.exports.getAllImages = function () {
-    const sql = `SELECT * FROM images;`;
+    const sql = `SELECT * FROM images
+    ORDER BY id DESC
+    LIMIT 3;`;
     return db
         .query(sql)
         .then((result) => result.rows)
@@ -56,4 +58,29 @@ module.exports.insertComment = function (username, comment, imageId) {
         .catch((error) => {
             console.log("error inserting image", error);
         });
+};
+
+module.exports.getMoreImages = (lastId) => {
+    const imagesPromise = db
+        .query(
+            `SELECT *
+            FROM images
+            WHERE id < $1
+            ORDER BY id DESC
+            LIMIT 3;`,
+            [lastId]
+        )
+        .then(({ rows }) => rows);
+
+    const lowestIdPromise = db
+        .query(
+            `
+            SELECT id FROM images
+            ORDER BY id ASC
+            LIMIT 1;
+       `
+        )
+        .then(({ rows }) => rows[0]);
+
+    return Promise.all([imagesPromise, lowestIdPromise]);
 };

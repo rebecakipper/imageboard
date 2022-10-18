@@ -14,7 +14,6 @@ const imageModalComment = {
                 .then((res) => res.json())
                 .then((comments) => {
                     this.comments = comments;
-                    console.log(comments);
                 });
         },
         uploadComment() {
@@ -46,7 +45,6 @@ const imageModalComment = {
     mounted() {
         if (this.imageId) {
             this.getCommentsByImage(this.imageId);
-            console.log(this.comments);
             if (this.comments.lenght > 0) {
                 this.displayComments = true;
             }
