@@ -40,7 +40,7 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     const { username, title, description } = req.body;
 
     db.insertImage(url, username, title, description)
-        .then((image) => res.json(image).statusCode(201))
+        .then((image) => res.status(201).json(image))
         .catch((err) => {
             // TODO: handle the error here
             res.json({ message: err.message });

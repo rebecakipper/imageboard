@@ -32,10 +32,19 @@ Vue.createApp({
                 });
         },
         showModal(id) {
+            /*If location.pathname does not have an image id in 
+            it when the page loads, the user will have to click 
+            on an image to open the modal as usual. That click handler
+             should be changed, however, to use pushState to change 
+             the url to have the image id in it when the modal is open. 
+             When the modal is closed, the url should once again be 
+             changed so that it no longer has the image id in it. */
+            history.pushState({}, "", "/" + id);
             this.displayModal = true;
             this.clickedImageId = id;
         },
         closeModal() {
+            history.pushState({}, "", "/");
             this.displayModal = false;
         },
         getMoreImages() {
@@ -59,11 +68,18 @@ Vue.createApp({
         },
     },
     data() {
+        /*To make the page show the image modal when it starts up, 
+        you can read the location.pathname and see if it contains
+         an image id. If it does, you can pass that as the initial 
+         value for the property in the object returned by the data 
+         function. That should make the modal appear immediately.
+ */
+
         return {
             message: "Please upload an image",
             images: [],
-            displayModal: null,
-            clickedImageId: null,
+            displayModal: !!location.pathname.split("/")[1],
+            clickedImageId: location.pathname.split("/")[1],
             lastId: 0,
             showButton: true,
         };
@@ -75,6 +91,21 @@ Vue.createApp({
     mounted() {
         this.state = "mounted";
 
+        /*         You will also want to open and close the modal appropriately 
+when the user uses the browser's history navigation buttons to move forward
+ or back in the history. To detect that this is happening, you should start
+  listening for the popstate event when you initialize your app. 
+  In the event handler you can set the reactive property you are using 
+  to keep track of the id of the image displayed in the modal to the
+   correct value for the new url.
+ */
+        window.addEventListener("popstate", (e) => {
+            console.log(location.pathname, e.state);
+            this.displayModal = !!location.pathname.split("/")[1];
+            this.clickedImageId = location.pathname.split("/")[1];
+            // show whatever is appropriate for the new url
+            // if you need it, e.state has the data you passed to `pushState`
+        });
         fetch("/images")
             .then((res) => res.json())
             .then((images) => {
