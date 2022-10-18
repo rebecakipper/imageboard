@@ -16,6 +16,7 @@ const imageModal = {
                 .then((res) => res.json())
                 .then((image) => {
                     this.image = image;
+
                     //todo:handle no img
 
                     /* 
@@ -28,6 +29,12 @@ const imageModal = {
                     it is not possible to get back to the invalid url with the browser's
                      history navigation buttons.
                      */
+                })
+                .catch((err) => {
+                    console.log(err);
+                    // TODO: handle the error here
+                    this.$emit("close");
+                    history.replaceState({}, "", "/");
                 });
         },
         emmitCloseModal(e) {
