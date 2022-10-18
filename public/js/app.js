@@ -45,10 +45,16 @@ Vue.createApp({
             fetch(fetchPath)
                 .then((res) => res.json())
                 .then((result) => {
+                    this.lastId = result.images[result.images.length - 1].id;
                     const { images, id } = result;
-                    const [a, b, c] = images;
-                    this.lastId = id;
-                    this.images.push(a, b, c);
+                    this.images.push(...images);
+                    if (id === this.lastId) {
+                        return (this.showButton = false);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                    // TODO: handle the error here
                 });
         },
     },
@@ -59,6 +65,7 @@ Vue.createApp({
             displayModal: null,
             clickedImageId: null,
             lastId: 0,
+            showButton: true,
         };
     },
     components: {

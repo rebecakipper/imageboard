@@ -18,10 +18,16 @@ app.get("/images", (req, res) => {
 
 app.get("/images/more", (req, res) => {
     const lastId = req.query.lastId;
-    db.getMoreImages(lastId).then(([images, { id }]) => {
-        const responseObj = { images, id };
-        res.json(responseObj);
-    });
+    db.getMoreImages(lastId)
+        .then(([images, { id }]) => {
+            if (images.length > 0) {
+                const responseObj = { images, id };
+                return res.json(responseObj);
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 });
 
 app.get("/image/:id", (req, res) => {
