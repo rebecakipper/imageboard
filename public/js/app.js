@@ -35,6 +35,9 @@ Vue.createApp({
             this.displayModal = true;
             this.clickedImageId = id;
         },
+        closeModal() {
+            this.displayModal = false;
+        },
     },
     data() {
         return {

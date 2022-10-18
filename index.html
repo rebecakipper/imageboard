@@ -18,7 +18,7 @@
                 <input type="text" name="title">
                 <label for="description">Description:</label>
                 <input type="text" name="description">
-                <label for="username">Username::</label>
+                <label for="username">Username:</label>
                 <input type="text" name="username">
                 <label for="file">File:</label>
                 <input type="file" name="file">
@@ -26,7 +26,7 @@
             </form>
             </header>
             <main>
-                <image-modal :image-id="clickedImageId" v-if="displayModal"></image-modal>
+                <image-modal :image-id="clickedImageId" v-if="displayModal" @close="closeModal"></image-modal>
                 <div class="img-card" v-for="image in images" @click="showModal(image.id)">
                     <img class="image" :src=image.url alt="image">
                     <h3 class="title">{{image.title}}</h3>

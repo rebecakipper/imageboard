@@ -14,10 +14,12 @@ const imageModal = {
         getImageData(id) {
             fetch("/image/" + id)
                 .then((res) => res.json())
-                .then(function (image) {
-                    imageModal.data.image = image;
-                    console.log(imageModal.data.image);
+                .then((image) => {
+                    this.image = image;
                 });
+        },
+        emmitCloseModal(e) {
+            this.$emit("close");
         },
     },
     mounted() {
@@ -27,15 +29,15 @@ const imageModal = {
     },
 
     template: `
-    <div class="background">
+    <div class="background" @click.self="emmitCloseModal">
         <div class="modal">
-            <div class="img-modal">
-                <img class="modal-image" src="{{url}}" alt="image">
-                <h3>{{title}}</h3>
-                <h4> {{description}}</h4>
-                <p>uploaded by {{user}} on {{created_at}}</p>
-                <comment-section></comment-section>
+            <div class="img-modal" v-if="image">
+                <img class="modal-image" :src="image.url" alt="image">
+                <h3>{{image.title}}</h3>
+                <h4> {{image.description}}</h4>
+                <p>uploaded by {{image.username}} on {{image.created_at}}</p>
             </div>
+            <comment-section :image-id=imageId></comment-section>
             
         </div>
     </div>`,

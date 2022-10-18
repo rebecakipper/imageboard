@@ -37,3 +37,23 @@ module.exports.getImageById = function (id) {
             console.log("error getting all images", error);
         });
 };
+
+module.exports.getCommentsByImageId = function (image_id) {
+    const sql = `SELECT * FROM comments WHERE image_id=$1;`;
+    return db
+        .query(sql, [image_id])
+        .then((result) => result.rows)
+        .catch((error) => {
+            console.log("error getting all comments", error);
+        });
+};
+
+module.exports.insertComment = function (username, comment, imageId) {
+    const sql = `INSERT INTO comments (username, comment, image_id) VALUES ($1, $2, $3) RETURNING *;`;
+    return db
+        .query(sql, [username, comment, imageId])
+        .then((result) => result.rows[0])
+        .catch((error) => {
+            console.log("error inserting image", error);
+        });
+};

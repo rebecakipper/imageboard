@@ -33,9 +33,17 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
         });
 });
 
-app.get("/image/:id", (req, res) => {
-    // get id from the request
-    // get image data from database, finding by id
+app.get("/comments/:id", (req, res) => {
+    const id = req.params.id;
+    db.getCommentsByImageId(id).then((result) => res.json(result));
+});
+
+app.post("/comments/:id", (req, res) => {
+    const imageId = req.params.id;
+    const { username, comment } = req.body;
+    db.insertComment(username, comment, imageId).then((result) =>
+        res.json(result)
+    );
 });
 
 app.get("*", (req, res) => {
