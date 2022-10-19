@@ -50,13 +50,17 @@ const imageModal = {
     template: `
     <div class="background" @click.self="emmitCloseModal">
         <div class="modal">
-            <div class="img-modal" v-if="image">
-                <img class="modal-image" :src="image.url" alt="image">
-                <h3>{{image.title}}</h3>
-                <h4> {{image.description}}</h4>
-                <p>uploaded by {{image.username}} on {{image.created_at}}</p>
+            <div class="img-nav">
+                <h2 class="arrow-nav">&lt</h2>
+                <div class="img-modal" v-if="image">
+                    <img class="modal-image" :src="image.url" alt="image">
+                    <h2>{{image.title}}</h2>
+                    <p> {{image.description}}</p>
+                    <p class="uploaded">uploaded by {{image.username}} on {{image.created_at}}</p>
+                </div>
+                <h2 class="arrow-nav">&gt</h2>
             </div>
-            <comment-section :image-id=imageId></comment-section>
+            <comment-section :image-id=imageId  v-if="image"></comment-section>
             
         </div>
     </div>`,

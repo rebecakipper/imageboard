@@ -14,6 +14,10 @@ const imageModalComment = {
                 .then((res) => res.json())
                 .then((comments) => {
                     this.comments = comments;
+                })
+                .catch((err) => {
+                    // TODO: handle the error here
+                    console.log(err);
                 });
         },
         uploadComment() {
@@ -53,7 +57,7 @@ const imageModalComment = {
     template: `
 <div class="comment-section">
     <div class="comment-upload">
-        <form action="/comments/{{imageId}}" method="post" @submit.prevent="uploadComment">
+        <form action="/comments/{{imageId}}" method="post" @submit.prevent="uploadComment" class="upFormcol">
             <h2>Add a comment!</h2>
             <label for="insert-comment">Your comment:</label>
             <input type="text" name="insert-comment" v-model="input_comment"/>
@@ -64,8 +68,8 @@ const imageModalComment = {
     </div>
     <div class="comments-container" >
         <div v-for="comment in comments" class="comment">
-            <h4>{{comment.comment}}</h4>
-            <p>{{comment.username}} on {{comment.created_at}}</p>
+            <p>{{comment.comment}}</p>
+            <p class="uploaded">by {{comment.username}} on {{comment.created_at}}</p>
         </div>
     </div>
 </div>

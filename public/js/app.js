@@ -49,7 +49,6 @@ Vue.createApp({
         },
         getMoreImages() {
             this.lastId = this.images[this.images.length - 1].id;
-            //console.log(this.lastId, this.images);
             const fetchPath = "/images/more?lastId=" + this.lastId;
             fetch(fetchPath)
                 .then((res) => res.json())
